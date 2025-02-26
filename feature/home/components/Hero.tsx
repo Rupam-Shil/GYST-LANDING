@@ -1,20 +1,57 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 const Hero: React.FC = () => {
+	const [hoverProgress, setHoverProgress] = useState(0);
+	const [displayedText, setDisplayedText] = useState('');
+	const fullText = 'Git Your Shit Together';
+	useEffect(() => {
+		if (hoverProgress === 1) {
+			let index = 0;
+			const timer = setInterval(() => {
+				if (index <= fullText.length) {
+					setDisplayedText(fullText.slice(0, index));
+					index++;
+				} else {
+					clearInterval(timer);
+				}
+			}, 50);
+			return () => clearInterval(timer);
+		} else {
+			setDisplayedText('');
+		}
+	}, [hoverProgress]);
+
 	return (
-		<section className="relative isolate  w-full overflow-hidden">
+		<section className="relative isolate w-full overflow-hidden">
 			<div className="container mx-auto px-4 py-20 text-center relative">
-				<motion.h1
+				<motion.div
 					initial={{ opacity: 0, y: 20 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.8 }}
-					className="text-6xl font-bold mb-6 relative z-10"
+					className="relative inline-block group mb-6 z-10"
+					onMouseEnter={() => setHoverProgress(1)}
+					onMouseLeave={() => setHoverProgress(0)}
 				>
-					Gyst
-				</motion.h1>
+					<motion.h1
+						className="text-6xl font-bold relative"
+						whileHover={{ scale: 1.05 }}
+						transition={{ type: 'spring', stiffness: 300 }}
+					>
+						<span className="group-hover:opacity-0 transition-opacity duration-300">
+							Gyst
+						</span>
+						<span className="absolute left-1/2 top-0 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-500 bg-gradient-to-r from-emerald-100 to-emerald-300 bg-clip-text text-transparent whitespace-nowrap transform origin-center">
+							{displayedText}
+						</span>
+					</motion.h1>
+					<motion.div
+						className="absolute -inset-2 bg-emerald-500/20 rounded-lg blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+						layoutId="glow"
+					/>
+				</motion.div>
 				<motion.p
 					initial={{ opacity: 0, y: 20 }}
 					animate={{ opacity: 1, y: 0 }}
