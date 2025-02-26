@@ -78,6 +78,7 @@ const Hero: React.FC = () => {
 				>
 					<a
 						href="https://github.com/created-by-varun/gyst/releases"
+						target="_blank"
 						className="bg-white text-black px-8 py-3 rounded-lg font-medium hover:bg-gray-200 transition-colors"
 					>
 						Download Now

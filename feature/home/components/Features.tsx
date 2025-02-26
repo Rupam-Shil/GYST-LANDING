@@ -2,90 +2,30 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
-
-interface FeatureCardProps {
-	title: string;
-	description: string;
-}
-
-const FeatureCard: React.FC<FeatureCardProps> = ({ title, description }) => {
-	const [ref, inView] = useInView({
-		triggerOnce: true,
-		threshold: 0.1,
-	});
-
-	return (
-		<motion.div
-			ref={ref}
-			initial={{ opacity: 0, y: 20 }}
-			animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-			transition={{ duration: 0.6 }}
-			whileHover={{ scale: 1.02 }}
-			className="p-6 border border-gray-800 rounded-lg bg-black/30 backdrop-blur-sm hover:border-emerald-500 hover:shadow-lg hover:shadow-emerald-500/20 transition-all relative overflow-hidden font-mono"
-		>
-			<div className="absolute top-2 right-3 flex gap-2">
-				<div className="w-3 h-3 rounded-full bg-red-500/50"></div>
-				<div className="w-3 h-3 rounded-full bg-yellow-500/50"></div>
-				<div className="w-3 h-3 rounded-full bg-green-500/50"></div>
-			</div>
-			<div className="mt-4">
-				<motion.span
-					className="text-emerald-500 inline-block"
-					initial={{ opacity: 0 }}
-					animate={{ opacity: 1 }}
-					transition={{ duration: 0.3 }}
-				>
-					$ ~
-				</motion.span>
-				<motion.h3
-					className="text-xl font-bold mb-4 text-emerald-400 inline-block ml-2"
-					initial={{ width: 0 }}
-					animate={{ width: 'auto' }}
-					transition={{ duration: 0.5, delay: 0.2 }}
-				>
-					{title}
-				</motion.h3>
-			</div>
-			<motion.p
-				className="text-gray-400 pl-6 border-l border-gray-800"
-				initial={{ opacity: 0, x: -20 }}
-				animate={{ opacity: 1, x: 0 }}
-				transition={{ duration: 0.5, delay: 0.4 }}
-			>
-				{description}
-			</motion.p>
-		</motion.div>
-	);
-};
+import FeatureCard from './FeatureCard';
 
 const Features: React.FC = () => {
 	const features = [
 		{
+			id: 'commit',
 			title: 'AI-Powered Commit Messages',
 			description:
 				'Automatically generate meaningful commit messages based on your changes',
 		},
 		{
-			title: 'Conventional Commit Format',
-			description:
-				'All messages follow the conventional commit format for consistency',
-		},
-		{
+			id: 'suggestions',
 			title: 'Multiple Suggestions',
 			description: 'Get multiple commit message options to choose from',
 		},
 		{
-			title: 'Quick Mode',
-			description: 'Fast commit workflow without confirmation prompts',
-		},
-		{
-			title: 'Smart Diff Analysis',
-			description: 'Analyze staged changes for better context',
-		},
-		{
+			id: 'help',
 			title: 'Command Help',
 			description: 'Get AI-powered suggestions for Git commands',
+		},
+		{
+			id: 'health',
+			title: 'Branch Health Report',
+			description: 'Get health reports on your branch status',
 		},
 	];
 
@@ -104,6 +44,7 @@ const Features: React.FC = () => {
 				{features.map((feature, index) => (
 					<FeatureCard
 						key={index}
+						id={feature.id}
 						title={feature.title}
 						description={feature.description}
 					/>
